@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zeng.dao.mapper.RoleMapper">
+
+    <sql id="roleBaseColumnSql">
+        role_id,
+        rolename,
+        role_describe
+    </sql>
+
+    <sql id="roleBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleId)">
+                    role_id = #{map.roleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.rolename)">
+                    AND rolename = #{map.rolename}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleDescribe)">
+                    AND role_describe = #{map.roleDescribe}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertRole" parameterType="com.zeng.dao.entity.Role">
+        INSERT INTO role(
+        <include refid="roleBaseColumnSql"/>
+        )VALUES(
+            #{roleId},
+            #{rolename},
+            #{roleDescribe}
+        )
+    </insert>
+
+    
+    <delete id="deleteRoleByRoleId" parameterType="Integer">
+        DELETE FROM role WHERE role_id = #{roleId}
+    </delete>
+
+    <update id="updateRole" parameterType="com.zeng.dao.entity.Role">
+        UPDATE role
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(rolename)">
+                rolename = #{rolename} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(roleDescribe)">
+                role_describe = #{roleDescribe} ,
+            </if>
+        </set>
+        WHERE role_id = #{roleId}
+    </update>
+
+    <select id="searchRoleByParams" parameterType="map" resultMap="roleMap">
+        SELECT
+        <include refid="roleBaseColumnSql"/>
+        FROM role
+        <include refid="roleBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.zeng.dao.entity.Role" id="roleMap">
+        <id column="role_id" property="roleId"/>
+        <result column="rolename" property="rolename"/>
+        <result column="role_describe" property="roleDescribe"/>
+    </resultMap>
+
+</mapper>

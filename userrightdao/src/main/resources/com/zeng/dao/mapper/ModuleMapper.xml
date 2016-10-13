@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zeng.dao.mapper.ModuleMapper">
+
+    <sql id="moduleBaseColumnSql">
+        module_id,
+        modulename,
+        module_level,
+        parent_module_id,
+        module_url,
+        child_module,
+        order_id
+    </sql>
+
+    <sql id="moduleBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleId)">
+                    module_id = #{map.moduleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.modulename)">
+                    AND modulename = #{map.modulename}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleLevel)">
+                    AND module_level = #{map.moduleLevel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.parentModuleId)">
+                    AND parent_module_id = #{map.parentModuleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleUrl)">
+                    AND module_url = #{map.moduleUrl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.childModule)">
+                    AND child_module = #{map.childModule}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.orderId)">
+                    AND order_id = #{map.orderId}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertModule" parameterType="com.zeng.dao.entity.Module">
+        INSERT INTO module(
+        <include refid="moduleBaseColumnSql"/>
+        )VALUES(
+            #{moduleId},
+            #{modulename},
+            #{moduleLevel},
+            #{parentModuleId},
+            #{moduleUrl},
+            #{childModule},
+            #{orderId}
+        )
+    </insert>
+
+    
+    <delete id="deleteModuleByModuleId" parameterType="java.lang.String">
+        DELETE FROM module WHERE module_id = #{moduleId}
+    </delete>
+
+    <update id="updateModule" parameterType="com.zeng.dao.entity.Module">
+        UPDATE module
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleId)">
+                module_id = #{moduleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(modulename)">
+                modulename = #{modulename} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleLevel)">
+                module_level = #{moduleLevel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parentModuleId)">
+                parent_module_id = #{parentModuleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleUrl)">
+                module_url = #{moduleUrl} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(childModule)">
+                child_module = #{childModule} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(orderId)">
+                order_id = #{orderId}
+            </if>
+        </set>
+        WHERE role_id = #{${table.pkColumn.variableName}}
+    </update>
+
+    <select id="searchModuleByParams" parameterType="map" resultMap="moduleMap">
+        SELECT
+        <include refid="moduleBaseColumnSql"/>
+        FROM module
+        <include refid="moduleBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.zeng.dao.entity.Module" id="moduleMap">
+        <id column="role_id" property="${table.pkColumn.variableName}"/>
+        <result column="module_id" property="moduleId"/>
+        <result column="modulename" property="modulename"/>
+        <result column="module_level" property="moduleLevel"/>
+        <result column="parent_module_id" property="parentModuleId"/>
+        <result column="module_url" property="moduleUrl"/>
+        <result column="child_module" property="childModule"/>
+        <result column="order_id" property="orderId"/>
+    </resultMap>
+
+</mapper>
