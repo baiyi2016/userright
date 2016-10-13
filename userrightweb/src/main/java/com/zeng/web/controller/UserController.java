@@ -7,6 +7,9 @@ import com.zeng.web.service.ModuleService;
 import com.zeng.web.service.RoleDetailService;
 import com.zeng.web.service.UserService;
 import com.zeng.web.vo.UserVo;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/10/13.
  */
+@Aspect
 @Controller
 public class UserController {
     @Autowired
@@ -29,6 +33,17 @@ public class UserController {
 
     @Autowired
     private ModuleService moduleService;
+
+        @Pointcut("execution(public String com.zeng.web.controller.UserController.toindex())")
+        public void myMethod(){}
+
+
+//    @Before("execution(public String com.zeng.web.controller.UserController.login(User user)")
+    @Before("execution(public java.lang.String com.zeng.web.controller.UserController.toindex())")
+    public void beforeMethod()
+    {
+        System.out.println("save start......");
+    }
 
     @RequestMapping("/login")
     public String login(User user,HttpSession session) {
@@ -47,6 +62,7 @@ public class UserController {
         }
         List<User> list = userService.findUserByUser(user);
         if(list!=null&&list.size()==1) {
+            StringBuffer sb;
             User u = list.get(0);
             RoleDetail roleDetail = new RoleDetail();
             roleDetail.setRoleId(u.getRoleId());
@@ -67,6 +83,8 @@ public class UserController {
         }
         return "redirect:/index.html";
     }
+
+
 
     @RequestMapping("/toindex")
     public String toindex() {
