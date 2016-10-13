@@ -61,7 +61,7 @@
     </select>
 
     <resultMap type="com.zeng.dao.entity.RoleDetail" id="roleDetailMap">
-        <id column="role_id" property="${table.pkColumn.variableName}"/>
+        <id column="role_id" property="roleId"/>
         <result column="role_detail_id" property="roleDetailId"/>
         <result column="module_id" property="moduleId"/>
     </resultMap>

@@ -96,7 +96,7 @@
     </select>
 
     <resultMap type="com.zeng.dao.entity.Module" id="moduleMap">
-        <id column="role_id" property="${table.pkColumn.variableName}"/>
+        <id column="role_id" property="roleId"/>
         <result column="module_id" property="moduleId"/>
         <result column="modulename" property="modulename"/>
         <result column="module_level" property="moduleLevel"/>
