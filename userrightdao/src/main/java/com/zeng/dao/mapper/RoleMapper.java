@@ -10,11 +10,11 @@ import com.fc.platform.commons.page.Pageable;
 
 public interface RoleMapper {
 
-	void insertRole(Role role);
+	int insertRole(Role role);
 
-	void deleteRoleByRoleId(Integer roleId);
+	int deleteRoleByRoleId(Integer roleId);
 
-	void updateRole(Role role);
+	int updateRole(Role role);
 
 	Page<Role> searchRoleByParams(@Param("map")Map<String, String> map , Pageable pageable);
 

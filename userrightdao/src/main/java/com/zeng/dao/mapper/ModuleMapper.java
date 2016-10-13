@@ -10,11 +10,11 @@ import com.fc.platform.commons.page.Pageable;
 
 public interface ModuleMapper {
 
-	void insertModule(Module module);
+	int insertModule(Module module);
 
-	void deleteModuleByModuleId(String moduleId);
+	int deleteModuleByModuleId(String moduleId);
 
-	void updateModule(Module module);
+	int updateModule(Module module);
 
 	Page<Module> searchModuleByParams(@Param("map")Map<String, String> map , Pageable pageable);
 
