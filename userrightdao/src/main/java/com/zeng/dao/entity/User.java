@@ -22,6 +22,10 @@ public class User {
 	 */
 	private Integer isdelete;
 	/**
+	 *  角色id
+	 */
+	private Integer roleId;
+	/**
 	 * 用户id
 	 * @param userId
 	 */
@@ -80,5 +84,20 @@ public class User {
      */	
     public Integer getIsdelete(){
     	return isdelete;
+    }
+	/**
+	 * 角色id
+	 * @param roleId
+	 */
+	public void setRoleId(Integer roleId){
+		this.roleId = roleId;
+	}
+	
+    /**
+     * 角色id
+     * @return
+     */	
+    public Integer getRoleId(){
+    	return roleId;
     }
 }

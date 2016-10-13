@@ -16,8 +16,8 @@ public interface UserMapper {
 
 	int updateUser(User user);
 
-	Page<User> searchUserByParams(@Param("map")Map<String, String> map , Pageable pageable);
+	Page<User> searchUserByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
-	List<User> searchUserByParams(@Param("map")Map<String, String> map);
+	List<User> searchUserByParams(@Param("map") Map<String, String> map);
 
 } 
